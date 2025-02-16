@@ -42,9 +42,9 @@ mkdir -p js_files
 # 4. Extract js file URL from gau-filter.txt and download with curl
 echo "[*] Downloading JS files..."
 while IFS= read -r line; do
-  if echo "$line" | grep -q "js$"; then
+  if echo "$line" | grep -qE '\.js($|\?)'; then
     echo "Downloading: $line"
-    filename=$(echo "$line" | sed 's|https\?://||; s|/|_|g')
+    filename=$(echo "$line" | sed 's|https\?://||; s|/|\\|g')
     curl -s "$line" -o "js_files/$filename"
   fi
 done < gau-filter.txt
